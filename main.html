@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Inventory My Devices</title>
+
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="typo.css"/>
+    <style>
+        code{ color:#1abc9c; }
+        html{ background:#eee; }
+        body{ width:90%; max-width: 960px; background:#fff; margin:3em auto 0; padding-top:2em;border:1px solid #ddd;border-width:0 1px;}
+        pre{white-space:pre-wrap;}
+        i.serif{ text-transform:lowercase; color:#1abc9c; }
+        :-moz-any(h1, h2, h3, h4, h5, h5) i.serif{ text-transform: capitalize; }
+        i.serif:hover{ color:inherit; }
+        #wrapper{ padding:5% 10%; position:relative;}
+        #tagline{ color:#999; font-size:1em; margin:-2em 0 2em; padding-bottom:2em; border-bottom:3px double #eee; }
+
+        #table{ margin-bottom:2em; color:#888; }
+
+        @media only screen and (max-width: 640px) {
+        table{ word-break:break-all;word-wrap:break-word;font-size:12px; }
+        .typo table th, .typo table td, .typo-table th, .typo-table td .typo table caption {
+        padding: 0.5em;
+        }
+        #fork{ display:none; }
+        }
+    </style>
+    <script src = "https://cdn.wilddog.com/js/client/current/wilddog.js" ></script>
+</head>
+<body>
+    <div id="wrapper" align="center" class="typo typo-selection">
+        <div class="header">
+            <h1>测试设备列表</h1>
+            <br/>
+            <h2 id="tagline" class="serif">在这里可以看到所有设备的最近一次打卡信息</h2>
+        </div>
+        <br/>
+        <table summary="设备列表">
+            <thead>
+                <tr>
+                    <th> 设备序号 </th>
+                    <th> 品牌 </th>
+                    <th> 型号 </th>
+                    <th> 最近打卡 </th>
+                </tr>
+            </thead>
+            <tbody id="devlist">
+            </tbody>
+
+        </table>
+    </div>
+    <script type="text/javascript">
+        var ref = new Wilddog("");
+        // 获得节点下所有数据
+        ref.on("value", function(snapshot,error) {
+            if (error == null) {
+                snapshot.forEach(function(data) {
+                var device = data.val();
+                var lineStr = "<tr><th>" + data.key() + "</th>"
+                            + "<th>" + device.deviceBrand + "</th>"
+                            + "<th>" + device.deviceModel + "</th>";
+                if (device.timeStamp != null) {
+                    var ptime = new Date(device.timeStamp);
+                    var ctime = new Date();
+                    var differ =  (ctime - ptime) / (1000*3600*24);
+                    if (differ > 1) {
+                        lineStr +=  "<th><font color=\"red\">" + ptime.toLocaleString() + "</font></th>";
+                    } else {
+                        lineStr += "<th>" + ptime.toLocaleString() + "</th>";
+                    }
+                } else {
+                    lineStr += "<th> - </th>";
+                }
+                lineStr += "</tr>";
+                document.getElementById("devlist").innerHTML += lineStr;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
