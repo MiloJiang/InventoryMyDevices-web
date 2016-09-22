@@ -26,7 +26,11 @@
         #fork{ display:none; }
         }
     </style>
+    <!-- For data -->
     <script src = "https://cdn.wilddog.com/js/client/current/wilddog.js" ></script>
+    <!-- For QR -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.qrcode.min.js"></script>
 </head>
 <body>
     <div id="wrapper" align="center" class="typo typo-selection">
@@ -49,8 +53,10 @@
             </tbody>
 
         </table>
-        <img src="apk-release.png" alt="Android" width="150">Android</img>
-        <!-- <img src="ios-release.png" alt="iOS" width="150">iOS</img> -->
+        <p style="display:inline;">android</p>
+        <div id="android" style="display:inline;"></div>
+        <p style="display:inline;">ios</p>
+        <div id="ios" style="display:inline;"></div>
     </div>
     <script type="text/javascript">
         var ref = new Wilddog("");
@@ -79,6 +85,16 @@
                 });
             }
         });
+        jQuery('#android').qrcode({
+          width : 100,
+          height: 100,
+		      text  : "http://android.apk"
+	      });
+        jQuery('#ios').qrcode({
+          width : 100,
+          height: 100,
+		      text  : "http://ios.ipa"
+	      });
     </script>
 </body>
 </html>
