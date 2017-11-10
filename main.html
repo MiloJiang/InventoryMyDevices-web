@@ -29,8 +29,8 @@
     <!-- For data -->
     <script src = "https://cdn.wilddog.com/js/client/current/wilddog.js" ></script>
     <!-- For QR -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.qrcode.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.5.1/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="jquery.qrcode.min.js"></script> -->
 </head>
 <body>
     <div id="wrapper" align="center" class="typo typo-selection">
@@ -59,7 +59,7 @@
         <div id="ios" style="display:inline;"></div>
     </div>
     <script type="text/javascript">
-        var ref = new Wilddog("");
+        var ref = new Wilddog("https://kanban.wilddogio.com/devices");
         // 获得节点下所有数据
         ref.on("value", function(snapshot,error) {
             if (error == null) {
